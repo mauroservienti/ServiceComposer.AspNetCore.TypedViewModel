@@ -1,0 +1,16 @@
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ServiceComposer.AspNetCore.TypedViewModel.Tests")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.1", FrameworkDisplayName="")]
+namespace ServiceComposer.AspNetCore
+{
+    public static class HttpRequestExtensions
+    {
+        public static T GetComposedResponseModel<T>(this Microsoft.AspNetCore.Http.HttpRequest request)
+            where T :  class { }
+    }
+    public static class ViewModelCompositionOptionsExtensions
+    {
+        public static void RegisterTypedViewModel<TViewModel>(this ServiceComposer.AspNetCore.ViewModelCompositionOptions options) { }
+        public static void RegisterTypedViewModels(this ServiceComposer.AspNetCore.ViewModelCompositionOptions options, System.Type[] viewModelTypes) { }
+    }
+}
