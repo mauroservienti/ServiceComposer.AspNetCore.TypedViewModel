@@ -1,14 +1,17 @@
 version: 2
 updates:
 - package-ecosystem: nuget
-  directory: "/src"
+  directory: "/src/ServiceComposer.AspNetCore.TypedViewModel.Tests"
   schedule:
     interval: daily
-    time: '04:00'
+  open-pull-requests-limit: 10
+- package-ecosystem: nuget
+  directory: "/src/ServiceComposer.AspNetCore.TypedViewModel"
+  schedule:
+    interval: daily
   open-pull-requests-limit: 10
 - package-ecosystem: nuget
   directory: "/targets"
   schedule:
     interval: daily
-    time: '04:00'
   open-pull-requests-limit: 10
