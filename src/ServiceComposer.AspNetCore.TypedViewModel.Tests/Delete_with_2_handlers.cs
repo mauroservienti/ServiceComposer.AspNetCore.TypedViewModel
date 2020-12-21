@@ -20,9 +20,9 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
             [TypedViewModel(typeof(INumber))]
             public Task Handle(HttpRequest request)
             {
-                var vm = request.GetComposedResponseModel<INumber>();
+                var vm = request.GetTypedViewModel<INumber>();
                 vm.ANumber = expectedNumber;
-                
+
                 return Task.CompletedTask;
             }
         }
@@ -33,9 +33,9 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
             [TypedViewModel(typeof(IString))]
             public Task Handle(HttpRequest request)
             {
-                var vm = request.GetComposedResponseModel<IString>();
+                var vm = request.GetTypedViewModel<IString>();
                 vm.AString = expectedString;
-                
+
                 return Task.CompletedTask;
             }
         }

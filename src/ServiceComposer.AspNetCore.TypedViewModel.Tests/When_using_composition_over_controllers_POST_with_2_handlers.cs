@@ -58,7 +58,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
                 var body = await reader.ReadToEndAsync();
                 var content = JObject.Parse(body);
 
-                var vm = request.GetComposedResponseModel<INumber>();
+                var vm = request.GetTypedViewModel<INumber>();
                 vm.ANumber = content?.SelectToken("ANumber")?.Value<int>() ?? default;
             }
         }
@@ -73,7 +73,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
                 var body = await reader.ReadToEndAsync();
                 var content = JObject.Parse(body);
 
-                var vm = request.GetComposedResponseModel<IString>();
+                var vm = request.GetTypedViewModel<IString>();
                 vm.AString = content?.SelectToken("AString")?.Value<string>();
             }
         }

@@ -35,7 +35,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
             public Task Handle(HttpRequest request)
             {
                 var routeData = request.HttpContext.GetRouteData();
-                var vm = request.GetComposedResponseModel<INumber>();
+                var vm = request.GetTypedViewModel<INumber>();
                 vm.ANumber = int.Parse(routeData.Values["id"].ToString());
                 return Task.CompletedTask;
             }
@@ -47,7 +47,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
             public Task Handle(HttpRequest request)
             {
                 var routeData = request.HttpContext.GetRouteData();
-                var vm = request.GetComposedResponseModel<INumber>();
+                var vm = request.GetTypedViewModel<INumber>();
                 vm.ANumber = int.Parse(routeData.Values["id"].ToString());
                 return Task.CompletedTask;
             }
@@ -58,7 +58,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
             [HttpGet("/api/CompositionOverController/{id}")]
             public Task Handle(HttpRequest request)
             {
-                var vm = request.GetComposedResponseModel<IString>();
+                var vm = request.GetTypedViewModel<IString>();
                 vm.AString = "sample";
                 return Task.CompletedTask;
             }

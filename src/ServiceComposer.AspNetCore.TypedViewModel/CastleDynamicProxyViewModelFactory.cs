@@ -14,7 +14,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel
     {
         private static ProxyGenerator generator = new();
 
-        public DynamicViewModel CreateViewModel(HttpContext httpContext, CompositionContext compositionContext)
+        public object CreateViewModel(HttpContext httpContext, ICompositionContext compositionContext)
         {
             var endpoint = httpContext.GetEndpoint();
             var metadata = endpoint?.Metadata;
@@ -22,7 +22,6 @@ namespace ServiceComposer.AspNetCore.TypedViewModel
                 .Select(a => a.Type)
                 .ToArray();
 
-            var logger = httpContext.RequestServices.GetRequiredService<ILogger<DynamicViewModel>>();
             TypedViewModel typedViewModel = null;
             if (viewModelTypes != null && viewModelTypes.Any())
             {
@@ -31,10 +30,10 @@ namespace ServiceComposer.AspNetCore.TypedViewModel
                     viewModelTypes,
                     ProxyGenerationOptions.Default,
                     new object[0],
-                    new TypedViewModelInterceptor());   
+                    new TypedViewModelInterceptor());
             }
 
-            var vm = new TypedDynamicViewModel(logger, compositionContext, typedViewModel);
+            var vm = new TypedDynamicViewModel(typedViewModel);
 
             return vm;
         }

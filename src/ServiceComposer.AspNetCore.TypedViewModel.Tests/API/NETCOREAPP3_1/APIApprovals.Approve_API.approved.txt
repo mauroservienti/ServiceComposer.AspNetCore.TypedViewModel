@@ -6,7 +6,7 @@ namespace ServiceComposer.AspNetCore
 {
     public static class HttpRequestExtensions
     {
-        public static T GetComposedResponseModel<T>(this Microsoft.AspNetCore.Http.HttpRequest request)
+        public static T GetTypedViewModel<T>(this Microsoft.AspNetCore.Http.HttpRequest request)
             where T :  class { }
     }
     public static class ViewModelCompositionOptionsExtensions

@@ -6,10 +6,10 @@ namespace ServiceComposer.AspNetCore
 {
     public static class HttpRequestExtensions
     {
-        public static T GetComposedResponseModel<T>(this HttpRequest request) where T : class
+        public static T GetTypedViewModel<T>(this HttpRequest request) where T : class
         {
             var vm = request.GetComposedResponseModel();
-            if (vm is TypedDynamicViewModel {TypedViewModel: T}) 
+            if (vm is TypedDynamicViewModel {TypedViewModel: T})
             {
                 return (T)vm.TypedViewModel;
             }

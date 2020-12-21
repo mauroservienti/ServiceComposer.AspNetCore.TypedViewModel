@@ -1,11 +1,15 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Dynamic;
+using Microsoft.Extensions.Logging;
 
 namespace ServiceComposer.AspNetCore.TypedViewModel
 {
-    class TypedDynamicViewModel : DynamicViewModel
+    class TypedDynamicViewModel : DynamicObject
     {
-        public TypedDynamicViewModel(ILogger<DynamicViewModel> logger, CompositionContext compositionContext, TypedViewModel typedViewModel)
-            : base(logger, compositionContext)
+        readonly ConcurrentDictionary<string, object> _properties = new();
+
+        public TypedDynamicViewModel( TypedViewModel typedViewModel)
         {
             if (typedViewModel != null)
             {
@@ -14,18 +18,33 @@ namespace ServiceComposer.AspNetCore.TypedViewModel
             }
         }
         public TypedViewModel TypedViewModel { get; }
-        
+
+        public override bool TryGetMember(GetMemberBinder binder, out object result) => _properties.TryGetValue(binder.Name, out result);
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            _properties.AddOrUpdate(binder.Name, value, (key, existingValue) => value);
+            return true;
+        }
+
+        public override IEnumerable<string> GetDynamicMemberNames()
+        {
+            foreach (var item in _properties.Keys)
+            {
+                yield return item;
+            }
+        }
+
         public void SetPropertyValue(string name, object value)
         {
-            GetProperties()[name] = value;
+            _properties.AddOrUpdate(name, value, (key, existingValue) => value);
         }
 
         public object GetPropertyValue(string name)
         {
-            var props= GetProperties();
-            if (props.ContainsKey(name))
+            if (_properties.ContainsKey(name))
             {
-                return props[name];
+                return _properties[name];
             }
 
             return null;

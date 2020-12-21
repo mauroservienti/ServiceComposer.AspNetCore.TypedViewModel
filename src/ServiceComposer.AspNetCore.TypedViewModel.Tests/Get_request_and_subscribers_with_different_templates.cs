@@ -20,7 +20,7 @@ namespace ServiceComposer.AspNetCore.TypedViewModel.Tests
             [TypedViewModel(typeof(IString))]
             public async Task Handle(HttpRequest request)
             {
-                var vm = request.GetComposedResponseModel<IString>();
+                var vm = request.GetTypedViewModel<IString>();
                 vm.AString = "sample";
 
                 var ctx = request.GetCompositionContext();
